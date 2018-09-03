@@ -25,7 +25,9 @@ defmodule ExArc.MixProject do
   defp deps do
     [
       {:arc, "~> 0.10.0"},
-      {:mime, "~> 1.3.0"}
+      {:mime, "~> 1.3.0"},
+      {:poison, "~> 3.1.0"},
+      {:timex, "~> 3.3.0"}
     ]
   end
 
