@@ -31,8 +31,12 @@ defmodule Arc.OSSFileObject do
   def new(definition, version, {%FileObject{}, %{}} = file_and_scope) do
     %{
       bucket: definition.storage_bucket(),
-      key: definition.storage_key(file_and_scope)
+      key: key(definition, version, file_and_scope)
     }
     |> new(version, file_and_scope)
+  end
+
+  defp key(definition, version, {%FileObject{name: name}, _scope} = file_and_scope) do
+    definition.storage_key(version, file_and_scope) <> Path.extname(name)
   end
 end

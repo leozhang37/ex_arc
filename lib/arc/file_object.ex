@@ -13,13 +13,13 @@ defmodule Arc.FileObject do
 
   alias Arc.Utils
 
-  def new(%{name: name, mime_type: nil} = attrs) do
+  def new(%{mime_type: mime_type} = attrs) when not is_nil(mime_type) do
+    struct(__MODULE__, attrs)
+  end
+
+  def new(%{name: name} = attrs) do
     attrs
     |> Map.put(:mime_type, Utils.mime_type(name))
     |> new()
-  end
-
-  def new(%{} = attrs) do
-    struct(__MODULE__, attrs)
   end
 end
