@@ -28,6 +28,12 @@ defmodule Arc.OSSFileObject do
     |> new()
   end
 
+  def new(%{} = attrs, version, {%{} = file_object, %{} = scope}) do
+    file_object = FileObject.new(file_object)
+
+    new(attrs, version, {file_object, scope})
+  end
+
   def new(definition, version, {%FileObject{}, %{}} = file_and_scope) do
     %{
       bucket: definition.storage_bucket(),
