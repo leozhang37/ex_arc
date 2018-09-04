@@ -1,7 +1,7 @@
 defmodule Arc.Actions.Head do
   defmacro __using__(_) do
     quote do
-      def head(%Arc.OSSFileObject{} = file_object), do: Arc.Actions.HEAD.head(__MODULE__, file_object)
+      def head(%Arc.OSSFileObject{} = file_object), do: Arc.Actions.Head.head(__MODULE__, file_object)
     end
   end
 
