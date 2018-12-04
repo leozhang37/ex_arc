@@ -17,7 +17,7 @@ defmodule Arc.Actions.SignedUploadMethod.PostObject do
       "Content-Type": content_type,
       "policy": policy
     }
-    |> definition.__storage().post_object_auth_data(policy)
+    |> definition.__storage().post_object_auth_data(policy, options)
   end
 
   #
@@ -50,15 +50,18 @@ defmodule Arc.Actions.SignedUploadMethod.PostObject do
   defp post_object_policy_conditions(definition, %OSSFileObject{bucket: bucket, key: key, file_and_scope: {%FileObject{mime_type: content_type}, _scope}}, options) do
     content_length_range = options[:content_length_range] || definition.content_length_range()
 
-    [
-      %{"bucket": bucket},
-      %{"key": key},
-      %{"Content-Type": content_type}
-      | case content_length_range do
-        {0, 0} -> []
-        {min, max} -> [["content-length-range", min, max]]
-      end
-    ]
+    basic_conditions =
+      [
+        %{"bucket": bucket},
+        %{"key": key},
+        %{"Content-Type": content_type}
+        | case content_length_range do
+          {0, 0} -> []
+          {min, max} -> [["content-length-range", min, max]]
+        end
+      ]
+
+    definition.__storage().post_object_policy_conditions(definition, options)
   end
 
   defp post_object_url(definition, file_object) do
