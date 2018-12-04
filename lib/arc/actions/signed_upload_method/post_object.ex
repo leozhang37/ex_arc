@@ -62,7 +62,7 @@ defmodule Arc.Actions.SignedUploadMethod.PostObject do
         end
       ]
 
-    definition.__storage().post_object_policy_conditions(definition, options)
+    definition.__storage().post_object_policy_conditions(definition, basic_conditions, options)
   end
 
   defp post_object_url(definition, file_object) do
